@@ -1,0 +1,68 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: brown;
+  color: white;
+}
+
+header {
+  font-size: 1.5rem;
+}
+
+header,
+form {
+  min-height: 20vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+ul {
+  display: flex;
+  flex-direction: column;
+  // justify-content: center;
+  align-items: center;
+}
+
+li {
+  font-size: 1.5rem;
+  // list-style: none;
+  justify-content: center;
+}
+
+.todo-input,
+.todo-button {
+  padding: 0.5rem;
+  font-size: 2rem;
+  border: none;
+  background-color: white;
+}
+
+.todo-button {
+  color: aliceblue;
+  background-color: blue;
+  &:hover {
+    color: blue;
+    background-color: aliceblue;
+  }
+}
+
+.todo-item.checked {
+  text-decoration: dotted;
+  color: green;
+  display: flex;
+}
+
+.todo-item .checked {
+  text-decoration: dotted;
+  color: green;
+  display: flex;
+}
+
+.todo-item {
+}
+
+.checked {
+  // text-decoration: dotted;
+  color: green;
+  // display: flex;
+}
