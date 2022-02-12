@@ -5,4 +5,4 @@ const t=document.querySelector("form"),e=document.querySelector(".todo-list");fu
 },{}],"Focm":[function(require,module,exports) {
 "use strict";require("./sass/main.scss"),require("./app");
 },{"./sass/main.scss":"clu1","./app":"A2T1"}]},{},["Focm"], null)
-//# sourceMappingURL=/To-Do-List/src.304ce663.js.map
+//# sourceMappingURL=/To-Do-List/src.68c389fc.js.map
