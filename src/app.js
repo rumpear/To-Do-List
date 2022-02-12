@@ -132,11 +132,15 @@ function removeDataFromLocalStorage(todoID) {
 
 function createMarkup(value, isComplete, id) {
   const markup = `
-  <li class="todo-item ${isComplete ? 'checked' : ''}">
+  <li class="todo-item ${isComplete ? 'todo-item--checked' : ''}">
     <button type="button" value="${id}" 
-    class="check-btn ${isComplete ? 'active' : ''}">Check</button>
-    ${value}
-    <button type="button" value="${id}" class="delete-btn">Del</button>
+    class="check-btn ${isComplete ? 'check-btn--active' : ''}">
+      <i class="fas fa-solid fa-check"></i>
+    </button>
+      <span class="todo-text">${value}</span>
+    <button type="button" value="${id}" class="delete-btn">
+      <i class="fas fa-times btn delete-btn"></i>
+    </button>
   </li>
   `;
 
