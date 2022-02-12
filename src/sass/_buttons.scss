@@ -1,0 +1,77 @@
+%button {
+  display: block;
+  // font-size: 16px;
+  width: 22px;
+  height: 22px;
+  // font-weight: 500;
+  cursor: pointer;
+  //   text-align: center;
+  border-radius: 50%;
+  border: none;
+  padding: 11px;
+  margin: 0;
+  background-color: #00000000;
+}
+
+.add-btn {
+  //   @extend %button;
+  //   color: aliceblue;
+  //   background-color: blue;
+  //   border-radius: 4px;
+  //   padding: 11px;
+  //   font-size: 20px;
+  display: flex;
+  cursor: pointer;
+
+  &:hover .add-btn__icon {
+    fill: #555555;
+  }
+}
+
+.add-btn__icon {
+  fill: #212121b0;
+}
+
+.check-btn {
+  @extend %button;
+  margin-right: 10px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: 2px solid #bbbdc7;
+  color: #00000000;
+
+  & > i {
+    pointer-events: none;
+  }
+}
+
+.check-btn--active {
+  background-color: #6ebb95;
+  color: #ffffff;
+  border-color: #5ea180;
+}
+
+.delete-btn {
+  @extend %button;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  opacity: 0;
+  pointer-events: none;
+
+  .todo-item:hover & {
+    opacity: 1;
+    pointer-events: all;
+
+    border: 2px solid #e75978;
+    color: #e75978;
+    & > i {
+      pointer-events: none;
+    }
+  }
+}
