@@ -93,6 +93,11 @@ body {
 .todo-body {
   @media screen and (max-width: 768px) {
     max-width: 450px;
+    max-height: 90vh;
+  }
+
+  @media screen and (min-width: 769px) {
+    width: 450px;
   }
 
   // margin-right: auto;
@@ -111,7 +116,8 @@ body {
   // padding: 20px;
 
   // position: relative;
-  width: 450px;
+  // width: 450px;
+  // width: 650px;
   max-height: 80vh;
   // height: 1576px;
 
@@ -200,7 +206,7 @@ body {
 }
 
 .todo-list::-webkit-scrollbar-thumb {
-  background-color: #223c50;
+  background-color: #bbbdc7;
   border-radius: 4px;
 }
 
@@ -211,6 +217,8 @@ body {
 }
 
 .todo-item {
+  // transition: text-decoration-line $animation-duration $timing-function;
+  transition: opacity $animation-duration $timing-function;
   // display: grid;
   // grid-template-columns: auto 1fr auto;
   // align-items: center;
@@ -265,16 +273,24 @@ body {
   // box-sizing: border-box;
   border-radius: 10px;
 
+  transition: background-color $animation-duration $timing-function;
+
   &:last-child {
     margin-bottom: 1px;
+  }
+
+  &:hover {
+    background-color: #e9e4e446;
   }
 }
 
 .todo-item--checked {
   color: #555555;
   opacity: 0.7;
+  transition: opacity $animation-duration $timing-function;
   .todo-text {
     text-decoration-line: line-through;
+    transition: text-decoration-line $animation-duration $timing-function;
   }
 }
 
@@ -284,4 +300,5 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  // padding-right: 40px;
 }
