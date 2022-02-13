@@ -14,13 +14,8 @@
 }
 
 .add-btn {
-  //   @extend %button;
-  //   color: aliceblue;
-  //   background-color: blue;
-  //   border-radius: 4px;
-  //   padding: 11px;
-  //   font-size: 20px;
   display: flex;
+  transition: fill $animation-duration $timing-function;
   cursor: pointer;
 
   &:hover .add-btn__icon {
