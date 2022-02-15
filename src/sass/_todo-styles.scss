@@ -223,7 +223,7 @@ body {
   // grid-template-columns: auto 1fr auto;
   // align-items: center;
   // gap: 15px;
-  padding: 20px 10px;
+  padding: 0px 10px;
 
   // position: relative;
   // display: block;
@@ -282,6 +282,13 @@ body {
   &:hover {
     background-color: #e9e4e446;
   }
+
+  // &:hover {
+  //   .todo-text {
+  //     // transition: background-color $animation-duration $timing-function;
+  //     background-color: transparent;
+  //   }
+  // }
 }
 
 .todo-item--checked {
@@ -296,9 +303,17 @@ body {
 
 .todo-text {
   // display: block;
+  height: 100%;
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  background-color: transparent;
+  padding: 20px 0;
+  cursor: default;
+  // background-color: inherit;
   // padding-right: 40px;
+  // &:hover {
+  //   background-color: #e9e4e446;
+  // }
 }
