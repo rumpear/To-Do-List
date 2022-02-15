@@ -56,6 +56,8 @@
   justify-content: center;
   align-items: center;
 
+  // margin-left: 10px;
+
   opacity: 0;
   pointer-events: none;
 
@@ -70,3 +72,54 @@
     }
   }
 }
+
+.edit-btn {
+  @extend %button;
+  margin-right: 10px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: 2px solid rgba(38, 127, 168, 0.979);
+  color: rgba(38, 127, 168, 0.945);
+
+  opacity: 0;
+  pointer-events: none;
+
+  font-size: 16px;
+  // padding: 12px;
+
+  .todo-item:hover & {
+    opacity: 1;
+    pointer-events: all;
+
+    & > i {
+      pointer-events: none;
+    }
+  }
+}
+
+// .save-btn {
+//   @extend %button;
+//   margin-right: 10px;
+
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+
+//   border: 2px solid #bbbdc7;
+//   color: blueviolet;
+
+//   opacity: 0;
+//   pointer-events: none;
+
+//   .todo-item:hover & {
+//     opacity: 1;
+//     pointer-events: all;
+
+//     & > i {
+//       pointer-events: none;
+//     }
+//   }
+// }
