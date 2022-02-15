@@ -1,2 +1,10 @@
 $timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 $animation-duration: 300ms;
+
+.visually-hidden {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+}
