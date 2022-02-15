@@ -1,3 +1,6 @@
+import Notiflix from 'notiflix';
+// import
+
 // * refs
 const form = document.querySelector('form');
 const todoList = document.querySelector('.todo-list');
@@ -12,27 +15,30 @@ const todoList = document.querySelector('.todo-list');
 
 // function addClearTasksBtn() {
 //   clearTasksBtn.hidden = true;
-//   if (todoArr.length >= 1) {
+//   if (todoData.length >= 1) {
 //     clearTasksBtn.hidden = true;
 //   } else {
 //     clearTasksBtn.hidden = false;
 //   }
 // }
 
+let todoData = [];
 renderTodo();
 
 form.addEventListener('submit', onSubmit);
 
 function onSubmit(e) {
+  console.log(e);
   e.preventDefault();
   const value = e.currentTarget.elements.input.value.trim();
+  const id = createId();
 
   if (!value) {
-    alert('Введите данные');
+    Notiflix.Notify.warning('Input field must not be empty');
     return;
   }
 
-  createData(value);
+  createData(value, id);
   renderTodo();
 
   form.reset();
@@ -42,7 +48,7 @@ function onSubmit(e) {
 
 function checkLocalStorageData() {
   if (!localStorage.getItem('toDo')) {
-    return (todoArr = []);
+    return (todoData = []);
   }
 }
 
@@ -54,7 +60,7 @@ function returnIfLocalStorageIsEmpty() {
 
 function getDataFromLocalStorage() {
   if (localStorage.getItem('toDo')) {
-    return (todoArr = JSON.parse(localStorage.getItem('toDo')));
+    return (todoData = JSON.parse(localStorage.getItem('toDo')));
   }
 }
 
@@ -71,20 +77,20 @@ function createId() {
     listID[i] = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
   }
 
-  return (id = listID.join(''));
+  return listID.join('');
 }
 
-function createData(value) {
+function createData(value, id) {
   checkLocalStorageData();
   getDataFromLocalStorage();
 
-  todoArr.push({
-    id: createId(),
+  todoData.push({
+    id: id,
     text: value,
     isComplete: false,
   });
 
-  setDataToLocalStorage(todoArr);
+  setDataToLocalStorage(todoData);
 }
 
 function renderTodo() {
@@ -106,39 +112,39 @@ function renderTodo() {
 
   enableDeleteBtn();
   enableCheckedBtn();
+  enableEditBtn();
+  enableSaveBtn();
 }
 
 function removeDataFromLocalStorage(todoID) {
-  // if (!localStorage.getItem('toDo')) {
-  //   return;
-  // }
-  // returnIfLocalStorageIsEmpty();
-
+  returnIfLocalStorageIsEmpty();
   getDataFromLocalStorage();
 
-  const arr = todoArr.filter(item => item.id !== todoID);
-  console.log(arr);
-
-  // const indexOfTodo = todoArr.map(item => {
-  //   console.log(item.id);
-  //   // item.indexOf(todoID);
-  // });
-  // indexOf(todoID);
-  // console.log(indexOfTodo);
-  // todoArr.splice(indexOfTodo, 1);
-
-  setDataToLocalStorage(arr);
+  const filteredData = todoData.filter(item => item.id !== todoID);
+  setDataToLocalStorage(filteredData);
 }
 
 function createMarkup(value, isComplete, id) {
   const markup = `
   <li class="todo-item ${isComplete ? 'todo-item--checked' : ''}">
-    <button type="button" value="${id}"
-    class="check-btn ${isComplete ? 'check-btn--active' : ''}">
+    <button type="button" data-id="${id}"
+      class="check-btn ${isComplete ? 'check-btn--active' : ''}">
       <i class="fas fa-solid fa-check"></i>
     </button>
-      <span class="todo-text">${value}</span>
-    <button type="button" value="${id}" class="delete-btn">
+					<input class="todo-text"
+							type="text" 
+							class="text" 
+							value="${value}"
+              data-id=${id}
+              autocomplete="off"
+							readonly/>
+    <button type="button" data-id="${id}" class="edit-btn">
+      <i class="fas fa-solid fa-pen"></i>
+    </button>
+    <button type="button" data-id="${id}" class="save-btn visually-hidden">
+      <i class="fas fa-floppy-disk"></i>
+    </button>
+    <button type="button" data-id="${id}" class="delete-btn">
       <i class="fas fa-times btn delete-btn"></i>
     </button>
   </li>
@@ -150,32 +156,31 @@ function createMarkup(value, isComplete, id) {
 function enableDeleteBtn() {
   const deleteBtn = document.querySelectorAll('.delete-btn');
   deleteBtn.forEach(btn => {
-    btn.addEventListener('click', e => {
-      deleteTodo(e.target.value);
-    });
+    btn.addEventListener('click', deleteTodo);
   });
 }
 
-function deleteTodo(ID) {
-  removeDataFromLocalStorage(ID);
+function deleteTodo(e) {
+  const { id } = e.target.dataset;
+  removeDataFromLocalStorage(id);
   renderTodo();
 }
 
 function enableCheckedBtn() {
   const checkedBtn = document.querySelectorAll('.check-btn');
   checkedBtn.forEach(btn => {
-    btn.addEventListener('click', e => {
-      checkedTodo(e.target.value);
-    });
+    btn.addEventListener('click', checkedTodo);
   });
 }
 
-function checkedTodo(ID) {
+function checkedTodo(e) {
   checkLocalStorageData();
   getDataFromLocalStorage();
 
-  todoArr.forEach(item => {
-    if (item.id === ID) {
+  const { id } = e.target.dataset;
+
+  todoData.forEach(item => {
+    if (item.id === id) {
       if (item.isComplete === true) {
         item.isComplete = false;
       } else {
@@ -184,18 +189,71 @@ function checkedTodo(ID) {
     }
   });
 
-  // todoArr.map(({ id, isComplete }) => {
-  //   // console.log(id, isComplete, btnId);
-  //   console.log(id === ID);
-  //   if (id === btnId) {
-  //     if (isComplete === true) {
-  //       isComplete = false;
-  //       console.log(isComplete);
-  //     } else {
-  //       isComplete = true;
-  //     }
-  //   }
-  // });
-  setDataToLocalStorage(todoArr);
+  setDataToLocalStorage(todoData);
+  renderTodo();
+}
+
+function enableEditBtn() {
+  const editBtn = document.querySelectorAll('.edit-btn');
+  editBtn.forEach(btn => {
+    btn.addEventListener('click', editTodo);
+  });
+}
+
+function editTodo(e) {
+  let newValue = '';
+
+  const input = document.querySelectorAll('.todo-text');
+  const { id } = e.target.dataset;
+
+  input.forEach(input => {
+    if (input.dataset.id === id) {
+      input.removeAttribute('readonly');
+      input.style.cursor = 'text';
+      input.focus();
+      input.selectionStart = input.value.length;
+
+      input.addEventListener('blur', () => {
+        if (!input.value) {
+          Notiflix.Notify.warning('Input field must not be empty');
+          renderTodo();
+          return;
+        }
+        newValue = input.value.trim();
+        saveTodo(id, newValue);
+      });
+
+      input.addEventListener('keydown', e => {
+        if (e.code === 'Enter') {
+          if (!input.value) {
+            renderTodo();
+            return;
+          }
+          newValue = input.value.trim();
+          saveTodo(id, newValue);
+        }
+      });
+    }
+  });
+}
+
+function enableSaveBtn() {
+  const saveBtn = document.querySelectorAll('.save-btn');
+  saveBtn.forEach(btn => {
+    btn.addEventListener('click', saveTodo);
+  });
+}
+
+function saveTodo(id, newValue) {
+  checkLocalStorageData();
+  getDataFromLocalStorage();
+
+  todoData.forEach(item => {
+    if (item.id === id) {
+      item.text = newValue;
+    }
+  });
+
+  setDataToLocalStorage(todoData);
   renderTodo();
 }
