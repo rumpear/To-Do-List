@@ -60,10 +60,12 @@
 
   opacity: 0;
   pointer-events: none;
+  display: none;
 
   .todo-item:hover & {
     opacity: 1;
     pointer-events: all;
+    display: flex;
 
     border: 2px solid #e75978;
     color: #e75978;
@@ -75,7 +77,8 @@
 
 .edit-btn {
   @extend %button;
-  margin-right: 10px;
+
+  margin: 0 10px;
 
   display: flex;
   justify-content: center;
@@ -86,6 +89,7 @@
 
   opacity: 0;
   pointer-events: none;
+  display: none;
 
   font-size: 16px;
   // padding: 12px;
@@ -93,6 +97,7 @@
   .todo-item:hover & {
     opacity: 1;
     pointer-events: all;
+    display: flex;
 
     & > i {
       pointer-events: none;
